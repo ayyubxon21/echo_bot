@@ -1,14 +1,13 @@
-import telegram
+import requests
 import os
 
 
 TOKEN = os.environ.get('TOKEN')
-WEBHOOK='https://motof.pythonanywhere.com/api'
-bot = telegram.Bot(token=TOKEN)
+url='https://ayyubxon679.pythonanywhere.com/api'
+TOKEN=os.environ['TOKEN']
 
-info=bot.getWebhookInfo()
-# Delete the webhook
-bot.deleteWebhook()
-# Set the webhook
-bot.setWebhook(WEBHOOK)
-print(info)
+payload = {
+    "url": url
+}
+response = requests.get(f'https://api.telegram.org/bot{TOKEN}/setWebhook', params=payload)
+print(response.status_code)
