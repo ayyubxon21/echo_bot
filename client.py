@@ -13,3 +13,8 @@ def echo(update: Update, context: CallbackContext):
     bot=context.bot
 
     bot.sendMessage(chat_id=chat_id, text=text)
+
+def shop(update: Update, context: CallbackContext):
+    chat_id=update.message.chat_id
+    bot=context.bot
+    bot.send_message(chat_id=chat_id, text='Welcome')

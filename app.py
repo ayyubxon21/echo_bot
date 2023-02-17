@@ -6,7 +6,8 @@ from telegram import Bot, Update
 
 from client import (
     start,
-    echo
+    echo,
+    shop
 )
 
 # flask app
@@ -21,6 +22,7 @@ def webhook():
     if request.method == 'GET':
         return 'hi from Python-2022I'
     # get data from request
+    
     elif request.method == 'POST':
         data = request.get_json(force=True)
 
@@ -30,6 +32,7 @@ def webhook():
         
         dispatcher.add_handler(CommandHandler('start', callback=start))
         dispatcher.add_handler(MessageHandler(Filters.text, echo))
+        dispatcher.add_handler(MessageHandler(Filters.text('🛍 Shop'), shop))
 
         dispatcher.process_update(update)
         print(data)
