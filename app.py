@@ -31,8 +31,8 @@ def webhook():
         update: Update = Update.de_json(data, bot)
         
         dispatcher.add_handler(CommandHandler('start', callback=start))
+        dispatcher.add_handler(MessageHandler(Filters.text("🛍 Shop"), shop))
         dispatcher.add_handler(MessageHandler(Filters.text, echo))
-        dispatcher.add_handler(MessageHandler(Filters.text('🛍 Shop'), shop))
 
         dispatcher.process_update(update)
         print(data)
