@@ -28,7 +28,7 @@ def api():
    
     data = request.get_json(force=True)
     print(data)
-    chat_id =5575549228
+    chat_id =1525065098
     # Send a message to the bot
     bot.send_message(chat_id=chat_id, text='Hello, this is a message from the bot')
     
