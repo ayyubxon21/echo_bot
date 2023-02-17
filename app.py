@@ -32,4 +32,5 @@ def webhook():
         dispatcher.add_handler(MessageHandler(Filters.text, echo))
 
         dispatcher.process_update(update)
+        print(data)
         return 'ok'
