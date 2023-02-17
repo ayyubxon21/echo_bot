@@ -3,13 +3,13 @@ from flask import Flask, request, jsonify
 # Import library to get environment variable
 import os 
 # Import library for Telegram bot
-import telegram 
+from telegram import Update,Bot
 
 # Create an instance of Flask
 app = Flask(__name__)
 TOKEN = os.environ.get('TOKEN')
 # Create a bot
-bot = telegram.Bot(token=TOKEN)
+bot = Bot(token=TOKEN)
 
 #Create a route for home page
 @app.route('/')
@@ -28,10 +28,10 @@ def api():
    
     data = request.get_json(force=True)
     print(data)
-    chat_id =1525065098
+    chat_id =Update.message.chat_id
+    text = Update.message.text
     # Send a message to the bot
-    bot.send_message(chat_id=chat_id, text='Hello, this is a message from the bot')
-    
+    bot.send_message(chat_id=chat_id, text=text)
     return jsonify(data)
 
 
