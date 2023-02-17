@@ -1,41 +1,35 @@
-# Import library to create a web app
-from flask import Flask, request, jsonify
-# Import library to get environment variable
-import os 
-# Import library for Telegram bot
-from telegram import Update,Bot
+from telegram.ext import Dispatcher, CommandHandler, MessageHandler, Filters
+from flask import Flask, request
+import requests
+import os
+from telegram import Bot, Update
 
-# Create an instance of Flask
+from client import (
+    start,
+    echo
+)
+
+# flask app
 app = Flask(__name__)
-TOKEN = os.environ.get('TOKEN')
-# Create a bot
-bot = Bot(token=TOKEN)
 
-#Create a route for home page
-@app.route('/')
-def home():
-    html = '''
-    <h1> This is a home page </h1>
-    <p> This is a paragraph </p>
-    '''
-    print(TOKEN)
-    return html
+# bot
+TOKEN = os.environ['TOKEN']
+bot = Bot(TOKEN)
 
-# Create a route
-@app.route('/api', methods=['POST'])
-def api():
-    # Get the data from the POST request.
-   
-    data = request.get_json(force=True)
-    print(data)
-    chat_id =Update.message.chat_id
-    text = Update.message.text
-    # Send a message to the bot
-    bot.send_message(chat_id=chat_id, text=text)
-    return jsonify(data)
+@app.route('/webhook', methods=['POST', 'GET'])
+def webhook():
+    if request.method == 'GET':
+        return 'hi from Python-2022I'
+    # get data from request
+    elif request.method == 'POST':
+        data = request.get_json(force=True)
 
+        # update
+        dispatcher: Dispatcher = Dispatcher(bot, None, workers=0)
+        update: Update = Update.de_json(data, bot)
+        
+        dispatcher.add_handler(CommandHandler('start', callback=start))
+        dispatcher.add_handler(MessageHandler(Filters.text, echo))
 
-# Run the app
-if __name__ == '__main__':
-    app.run(debug=True)
-
+        dispatcher.process_update(update)
+        return 'ok'

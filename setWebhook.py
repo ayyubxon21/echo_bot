@@ -2,8 +2,7 @@ import requests
 import os
 
 
-TOKEN = os.environ.get('TOKEN')
-url='https://ayyubxon679.pythonanywhere.com/api'
+url='https://ayyubxon679.pythonanywhere.com/webhook'
 TOKEN=os.environ['TOKEN']
 
 payload = {

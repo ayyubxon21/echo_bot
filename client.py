@@ -1,8 +1,9 @@
-import requests
+from telegram.ext import CallbackContext
+from telegram import Bot, Update
 
-BASE_URL = 'https://motof.pythonanywhere.com/api'
+def start(update: Update, context: CallbackContext):
+    update.message.reply_text('Welcome to our bot')
 
-data = {'name': 'Moto', 'age': 30}
-r = requests.post(BASE_URL, json=data)
-
-print(r.json())
+def echo(update: Update, context: CallbackContext):
+    text=update.message.text
+    update.message.reply_text(text)
